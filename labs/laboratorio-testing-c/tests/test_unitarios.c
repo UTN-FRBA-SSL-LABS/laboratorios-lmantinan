@@ -26,19 +26,45 @@ void test_agregar_uno(void) {
  *  PARTE A — Agregar el siguiente test (ver README.md, Parte 4)
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/* TODO: pegar aqui la funcion test_total_precio_unitario() */
+void test_total_precio_unitario(void) {
+    printf("\n[total: un producto, cantidad 1]\n");
+    Carrito c;
+    carrito_init(&c);
+    Producto p = {"Leche", 350, 1};
+    carrito_agregar(&c, p);
+    ASSERT_IGUAL(350, carrito_total(&c));
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
  *  PARTE B — Completar los blancos (ver README.md, Parte 5)
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/* TODO: pegar y completar la funcion test_total_con_cantidad() */
+void test_total_con_cantidad(void) {
+    printf("\n[total: un producto, cantidad 2]\n");
+    Carrito c;
+    carrito_init(&c);
+    Producto p = {"Leche", 350, 2};  /* 350 x 2 = 700 */
+    carrito_agregar(&c, p);
+    ASSERT_IGUAL(700, carrito_total(&c));  /* <-- completar el valor esperado */
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
  *  PARTE C — Escribir un test propio (ver README.md, Parte 7)
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/* TODO: escribir test_carrito_lleno() */
+void test_carrito_lleno(void) {
+    printf("\n[carrito lleno]\n");
+    Carrito c;
+    carrito_init(&c);
+    Producto p = {"Leche", 350, 1};
+
+    carrito_agregar(&c, p);
+    carrito_agregar(&c, p);
+    carrito_agregar(&c, p);
+    carrito_agregar(&c, p);
+
+    ASSERT_IGUAL(0, carrito_agregar(&c, p));
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
  *  main
@@ -49,9 +75,67 @@ int main(void) {
     test_carrito_nuevo();
     test_agregar_uno();
     /* Descomentar a medida que agregues las funciones: */
-    /* test_total_precio_unitario(); */
-    /* test_total_con_cantidad();    */
-    /* test_carrito_lleno();         */
+    test_total_precio_unitario();
+    test_total_con_cantidad();
+    test_carrito_lleno();
     RESUMEN();
     return EXIT_CODE();
 }
+
+/*EJERCITACIÓN EXTRA E1*/
+void test_buscar_producto(void) {
+    printf("\n[buscar producto]\n");
+
+    Carrito c;
+    carrito_init(&c);
+
+    Producto pan = {"Pan", 200, 3};
+    Producto leche = {"Leche", 350, 2};
+
+    carrito_agregar(&c, pan);
+    carrito_agregar(&c, leche);
+
+    ASSERT_IGUAL(0, carrito_buscar(&c, "Pan"));
+    ASSERT_IGUAL(1, carrito_buscar(&c, "Leche"));
+    ASSERT_IGUAL(-1, carrito_buscar(&c, "Queso"));
+}
+
+/*EJERCITACIÓN EXTRA E2*/
+/*void test_total_ignora_cantidad_cero(void) {
+    printf("\n[total: ignora cantidad cero]\n");
+
+    Carrito c;
+    carrito_init(&c);
+
+    Producto leche = {"Leche", 350, 2};
+    Producto pan = {"Pan", 200, 0};
+
+    carrito_agregar(&c, leche);
+    carrito_agregar(&c, pan);
+
+    ASSERT_IGUAL(700, carrito_total(&c));
+}*/
+
+
+/*EJERCITACIÓN EXTRA E3*/
+/*
+
+ASSERT_IGUAL(800, carrito_total(&c));
+
+El framework debería mostrar algo similar a:
+[FAIL] carrito_total(&c) => esperado 800, obtenido 700  (linea XX)
+
+Y al final:
+--- X/X tests OK, 1 FALLARON ---
+
+
+El framework me dice:
+
+- Que el test falló.
+- El valor esperado y el obtenido.
+- La línea de código donde está el ASSERT.
+- Cuántos tests pasaron/fallaron.
+
+Y al haber un fallo "EXIT_CODE()"", me termina devolviendo 1.
+
+*/
