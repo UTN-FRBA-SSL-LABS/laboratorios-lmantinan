@@ -335,7 +335,7 @@ make test
 > R:
 
 ```
-GETLENGTH_PASA=
+GETLENGTH_PASA=SI
 ```
 _(escribí SI cuando todos los tests de GetLength pasen)_
 
@@ -384,7 +384,7 @@ make test
 ```
 
 ```
-AREEQUAL_PASA=
+AREEQUAL_PASA=SI
 ```
 _(escribí SI cuando todos los tests de AreEqual pasen)_
 
@@ -425,7 +425,7 @@ make test
 ```
 
 ```
-AREDECIMALDIGITS_PASA=
+AREDECIMALDIGITS_PASA=SI
 ```
 _(escribí SI cuando todos los tests de AreDecimalDigits pasen)_
 
@@ -452,7 +452,7 @@ make test
 ```
 
 ```
-CONTAINS_PASA=
+CONTAINS_PASA=SI
 ```
 _(escribí SI cuando todos los tests de Contains pasen)_
 
@@ -467,7 +467,7 @@ Antes de implementar, discutí con tu equipo:
 
 **P6** — Conclusión de la discusión:
 
-> R:
+> R: Es correcto tener ToInteger en un módulo separado llamado Conversion. La biblioteca String se encarga de las operaciones sobre cadenas, como comparar, medir y buscar caracteres. En cambio, ToInteger convierte una cadena de texto en un número entero, por lo que pertenece al módulo Conversion. Esta separación permite organizar mejor el código y respetar la responsabilidad de cada módulo.
 
 ---
 
@@ -506,10 +506,10 @@ make test
 
 **P8** — La expresión `*s - '0'` convierte un carácter dígito al entero correspondiente. ¿Por qué funciona? ¿Qué devuelve `'3' - '0'`?
 
-> R:
+> R: Funciona porque los caracteres numéricos tienen códigos consecutivos en la tabla ASCII. Al restar el código del carácter '0' al código del dígito, obtenemos su valor entero. Por ejemplo, '3' - '0' devuelve 3.
 
 ```
-TOINTEGER_PASA=
+TOINTEGER_PASA=SI
 ```
 _(escribí SI cuando todos los tests de ToInteger pasen)_
 
@@ -562,7 +562,7 @@ foo
 
 **P9** — ¿Por qué `(void)argc` suprime un warning? ¿Cuándo sería necesario usar `argc`?
 
-> R:
+> R: (void)argc se utiliza para indicar al compilador que la variable argc no se utiliza intencionalmente, evitando así una advertencia por variable sin usar. Es necesario utilizar argc cuando queremos controlar la cantidad de argumentos recibidos, por ejemplo, para verificar que el usuario haya ingresado suficientes argumentos antes de acceder a argv[1].
 
 ---
 
@@ -589,7 +589,7 @@ Salida esperada:
 ```
 
 ```
-LONGITUDES_PASA=
+LONGITUDES_PASA=SI
 ```
 _(SI o NO)_
 
@@ -616,7 +616,7 @@ make mayorlongitud
 ```
 
 ```
-MAYORLONGITUD_PASA=
+MAYORLONGITUD_PASA=SI
 ```
 _(SI o NO)_
 
@@ -652,7 +652,7 @@ make suma
 ```
 
 ```
-SUMA_PASA=
+SUMA_PASA=SI
 ```
 _(SI o NO)_
 
@@ -662,15 +662,15 @@ _(SI o NO)_
 
 **P10** — `GetLength` es recursiva pero en C una llamada recursiva consume un stack frame. Si llamaras `GetLength` con un string de 1.000.000 de caracteres, ¿qué pasaría? ¿Cómo lo resolverías?
 
-> R:
+> R: Si se llama a GetLength con una cadena de 1.000.000 de caracteres, se crearían muchísimos stack frames y probablemente se produciría un stack overflow. Para resolverlo, implementaría GetLength de forma iterativa, recorriendo la cadena con un puntero y utilizando un contador, evitando así la acumulación de llamadas recursivas.
 
 **P11** — En la Parte III, todos los programas usan `char **arg` para iterar en vez de un índice entero. ¿Qué ventaja tiene este estilo? ¿Cuándo sería preferible usar el índice?
 
-> R:
+> R: La ventaja de utilizar char **arg es que permite recorrer directamente los argumentos mediante punteros, sin necesitar un índice entero ni consultar argc en cada iteración. El uso de índices sería preferible cuando necesitamos acceder a una posición específica, recorrer los argumentos en un orden determinado o conocer su posición numérica.
 
 **P12** — En C, `"hola"` es un literal de tipo `const char *`. Si intentaras modificar un carácter con `s[0] = 'H'`, el comportamiento es indefinido. ¿Por qué? ¿En qué parte de la memoria viven los literales?
 
-> R:
+> R: Los literales de cadena generalmente se almacenan en una sección de memoria estática de solo lectura. Intentar modificarlos produce comportamiento indefinido porque el programa no tiene permitido escribir sobre esa memoria. Para modificar una cadena debemos utilizar un arreglo de caracteres modificable o reservar memoria adecuada.
 
 ---
 
